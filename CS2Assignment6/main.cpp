@@ -8,11 +8,12 @@ int main()
     extern char **environ; // needed to access your execution environment
     int k = 0;
    
-    /*while (environ[k] != NULL)
+    while (environ[k] != NULL)
     {
         cout << environ[k] << endl;
         k++;
-    }*/
+    }
+    cout<<endl;
 
     wordSearch (environ);
 
@@ -20,17 +21,21 @@ int main()
 }
 void wordSearch(extern char** e)
 {
-    char arr[10];
-    for(int i=0; i<1; i++)
-    {
-        arr[i]=*e[i];
-        cout<<arr[i];
-    }
-    string str(arr);
+   char* temp[45]={0, 0};
+   int i=0;
+   char* word="jen";
+   
+   for(i=0; i<45; i++)
+   {
+       temp[i]=e[i];
+       string str;
+       str+= temp[i];
+       cout<<str<<endl;
+       if(strcmp(word, temp[i])!=0)
+        {
+            cout<<"Found a match!"<<endl;
+        }
+   }
+   
 
-    string word;
-    stringstream ss(str);
-    ss>> word;
-    //cout<<word;  
-    
 }
