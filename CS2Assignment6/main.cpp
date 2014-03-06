@@ -21,50 +21,35 @@ int main()
 }
 void wordSearch(extern char** e)//create an array of words to work with
 {
-   //cout<<e[0]<<endl<<endl;
-   //cout<<*(e+40)<<endl<<endl;
-   //cout<<*(*e)<<endl<<endl;
    int i=0, count=0;
-   string str=" ",line;//, line2, line3, line4;
-   //char *tr=e;
+   string str=" ",line;
    int len= strlen(*e);
-   //cout<<"LEN: "<<len<<endl;
 
    int counter=0;
-   //cout<<"LEN: "<<endl;
-   for(i=0; i<44; i++)
+   for(i=0; i<45; i++)
    {
        str+= *(e+i);
-       cout<<str<<endl<<endl;
        counter++;
    }
-  // cout<<"Counter: "<<counter<<endl;
-   //cout<<"Before SS: "<<str<<endl;
-   stringstream ss (str);
-   //cout<<endl<<endl<<"After SS: "<<str<<endl;//doesn't have all of the file
-   
+  
+   stringstream ss (str);   
 
    //CHECKING FOR POSSIBLE WORDS
          
-   getline(ss, line);//possibly reading whole file without error
+   getline(ss, line);
    int len2= line.length();
-   string arr[3000];
-   cout<<"LEN2: "<<len2<<endl;
-   
-       for(int i=0; i<len2; i++)
-       {
+   string arr[4000];
+   for(int i=0; i<len2; i++)
+   {
            
-            if(isalnum(line[i])||line[i]=='_')
-            {
-                arr[i]=line[i];
-            }
-            else
-            {
-                arr[i]=' ';
-            }
-           // cout<<arr[i];
-            
-            count++;
-       }
-     //  cout<<endl<<"COUNT:"<<count<<endl;
+        if(isalnum(line[i])||line[i]=='_')
+        {
+            arr[i]=line[i];
+        }
+        else
+        {
+            arr[i]=' ';
+        }
+        cout<<arr[i];
+    }
 }
