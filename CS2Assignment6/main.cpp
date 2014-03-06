@@ -1,8 +1,9 @@
 #include <iostream>
 #include <sstream>
+#include <string>
 using namespace std;
 
-void wordSearch(extern char**);
+void wordSearch(extern char** e);
 int main()
 {
     extern char **environ; // needed to access your execution environment
@@ -17,39 +18,70 @@ int main()
 
     wordSearch (environ);
 
+    int pause;
+    cin>>pause;
     return 0;
 }
 void wordSearch(extern char** e)//create an array of words to work with
 {
+    //VARIABLES
    int i=0, count=0;
    string str=" ",line;
    int len= strlen(*e);
 
-   int counter=0;
+   //PUT ARGUMENT INTO STRING FORM
    for(i=0; i<45; i++)
    {
        str+= *(e+i);
-       counter++;
    }
-  
    stringstream ss (str);   
 
-   //CHECKING FOR POSSIBLE WORDS
-         
+   //CHECK FOR POSSIBLE WORDS- ELIMINATE ILLEGAL CHARACTERS     
    getline(ss, line);
    int len2= line.length();
-   string arr[4000];
+   string PossWordArr[2000];
    for(int i=0; i<len2; i++)
-   {
-           
+   {           
         if(isalnum(line[i])||line[i]=='_')
         {
-            arr[i]=line[i];
+            PossWordArr[i]=line[i];
         }
         else
         {
-            arr[i]=' ';
+            PossWordArr[i]=' ';
         }
-        cout<<arr[i];
+   }
+
+   //CHECKING FOR REAL WORDS
+   string RealWordArr[100];
+   string word=" ";
+   int k=0, K=0, m=0, alpha;
+
+   //PUT REAL WORDS INTO CHAR** ARRAY
+   while(K<1187)//)
+    {  
+        word=PossWordArr[K-1];
+        alpha=0;
+        while (PossWordArr[K]!=" ")
+        {
+            word+=PossWordArr[K];
+            K++;
+            if(PossWordArr[K]>"A" &&PossWordArr[K]<"z")
+            {
+                alpha ++;
+            }
+        }
+        
+        if(PossWordArr[K]==" ")
+        {
+            int len = strlen(word.c_str());
+            if(len>=3 && alpha>0)
+            {
+                RealWordArr[k]=word;
+                cout<<"k: "<<k<<" "<<RealWordArr[k]<<endl;
+                k++;                   
+            }K++; 
+        }    
     }
+
 }
