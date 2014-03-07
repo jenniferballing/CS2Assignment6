@@ -39,7 +39,7 @@ void wordSearch(extern char** e)//create an array of words to work with
    //CHECK FOR POSSIBLE WORDS- ELIMINATE ILLEGAL CHARACTERS     
    getline(ss, line);
    int len2= line.length();
-   string PossWordArr[2000];
+   string PossWordArr[4000];
    for(int i=0; i<len2; i++)
    {           
         if(isalnum(line[i])||line[i]=='_')
@@ -50,15 +50,17 @@ void wordSearch(extern char** e)//create an array of words to work with
         {
             PossWordArr[i]=' ';
         }
+        
    }
 
    //CHECKING FOR REAL WORDS
-   string RealWordArr[100];
+   string RealWordArr[400];
    string word=" ";
-   int k=0, K=0, m=0, alpha;
+   int k=0, K=1, m=0, alpha;
 
    //PUT REAL WORDS INTO CHAR** ARRAY
-   while(K<1187)//)
+   bool done =true;
+   while(done)//)
     {  
         word=PossWordArr[K-1];
         alpha=0;
@@ -71,17 +73,17 @@ void wordSearch(extern char** e)//create an array of words to work with
                 alpha ++;
             }
         }
-        
+        int len3 = strlen(word.c_str());
         if(PossWordArr[K]==" ")
         {
-            int len = strlen(word.c_str());
-            if(len>=3 && alpha>0)
+            if(len3>=3 && alpha>0)
             {
                 RealWordArr[k]=word;
                 cout<<"k: "<<k<<" "<<RealWordArr[k]<<endl;
                 k++;                   
             }K++; 
-        }    
-    }
+        }  
+        if(K>2555) done=false;
+    }cout<<"RealWordArr[231]"<<RealWordArr[231]; 
 
 }
