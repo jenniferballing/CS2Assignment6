@@ -1,20 +1,25 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
+
 using namespace std;
 
 void wordSearch(extern char** e);
+vector<string> lines;
+vector<string> words;
 int main()
 {
     extern char **environ; // needed to access your execution environment
     int k = 0;
-   
+    //cout<<"ACTUAL INFORMATION:"<<endl;
     while (environ[k] != NULL)
     {
+        
         //cout << environ[k] << endl;
         k++;
     }
-    //cout<<"K: "<<k<<endl;
+    cout<<"K: "<<k<<endl;
 
     wordSearch (environ);
 
@@ -22,68 +27,54 @@ int main()
     cin>>pause;
     return 0;
 }
-void wordSearch(extern char** e)//create an array of words to work with
+void wordSearch(char** e)//create an array of words to work with
 {
     //VARIABLES
-   int i=0, count=0;
-   string str=" ",line;
+   string str=" ";//,line;
    int len= strlen(*e);
 
    //PUT ARGUMENT INTO STRING FORM
-   for(i=0; i<45; i++)
+   while(*e!=NULL)
    {
-       str+= *(e+i);
+       lines.insert(lines.end(), *(e));
+       //str+= *(e++);
    }
-   stringstream ss (str);   
-
-   //CHECK FOR POSSIBLE WORDS- ELIMINATE ILLEGAL CHARACTERS     
-   getline(ss, line);
-   int len2= line.length();
-   string PossWordArr[4000];
-   for(int i=0; i<len2; i++)
-   {           
-        if(isalnum(line[i])||line[i]=='_')
+   str+= *(e++);
+   str+=" ";
+   
+   string word;
+   int j=0;
+   int alpha=0;
+    int i=0;
+    for(i=0; i<str.length(); i++)
+    {
+        char temp=str[i];
+        if((temp>0 && temp <48)|| (temp<65 && temp>57) || (temp>122))//ELIMINATE ILLEGAL CHARS
         {
-            PossWordArr[i]=line[i];
+            temp=' ';
         }
-        else
+        if(temp!=' ')
         {
-            PossWordArr[i]=' ';
+            word+=temp;
         }
-        
-   }
-
-   //CHECKING FOR REAL WORDS
-   string RealWordArr[400];
-   string word=" ";
-   int k=0, K=1, m=0, alpha;
-
-   //PUT REAL WORDS INTO CHAR** ARRAY
-   bool done =true;
-   while(done)//)
-    {  
-        word=PossWordArr[K-1];
-        alpha=0;
-        while (PossWordArr[K]!=" ")
+        if((temp>64 && temp <91) || (temp>96 && temp<123))//CHECK FOR ENOUGH LETTERS FOR WORD
         {
-            word+=PossWordArr[K];
-            K++;
-            if(PossWordArr[K]>"A" &&PossWordArr[K]<"z")
+            alpha ++;
+        }            
+        if(temp == ' ')
+        {
+            if(word.length()>2 && alpha>0)//LONG ENOUGH WITH ENOUGH LETTERS
             {
-                alpha ++;
+                alpha=0;
+                words.insert(words.end(), word);
+                word.clear();
+                for(vector<string>::const_iterator k = words.begin(); k != words.end(); ++k)
+                {
+                    cout << *k <<" " ;
+                }
             }
-        }
-        int len3 = strlen(word.c_str());
-        if(PossWordArr[K]==" ")
-        {
-            if(len3>=3 && alpha>0)
-            {
-                RealWordArr[k]=word;
-                cout<<"k: "<<k<<" "<<RealWordArr[k]<<endl;
-                k++;                   
-            }K++; 
-        }  
-        if(K>2555) done=false;
-    }cout<<"RealWordArr[231]"<<RealWordArr[231]; 
+        }                 
+    }
+   cout<<"TOTAL WORDS: "<<(int) words.size()<<endl;
 
 }
