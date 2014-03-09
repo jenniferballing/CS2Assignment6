@@ -2,12 +2,18 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iomanip>
+#include <algorithm>
+#include "WordObj.h"
 
 using namespace std;
 
 void wordSearch(extern char** e);
 vector<string> lines;
 vector<string> words;
+vector<string> tempWords;
+vector<WordObj> obVec;
+vector<string> foundLines;
 int main()
 {
     extern char **environ; // needed to access your execution environment
@@ -19,19 +25,23 @@ int main()
         //cout << environ[k] << endl;
         k++;
     }
-    cout<<"K: "<<k<<endl;
-
     wordSearch (environ);
 
     int pause;
     cin>>pause;
     return 0;
 }
-void wordSearch(char** e)//create an array of words to work with
+void wordSearch(char** e)
 {
     //VARIABLES
    string str=" ";//,line;
-   int len= strlen(*e);
+   int len= strlen(*e), i, j, k, alpha, z, jen, levi, count=0;
+   string sub, n, sub2, word, input;
+   int num= words.size();
+   bool exists=false;
+   str+=" ";
+   WordObj arr[200];
+   WordObj obj;
 
    //PUT ARGUMENT INTO STRING FORM
    while(*e!=NULL)
@@ -39,11 +49,6 @@ void wordSearch(char** e)//create an array of words to work with
        lines.insert(lines.end(), *(e));
        str+= *(e++);
    }
-   str+=" ";
-   string word;
-   int j=0;
-   int alpha=0;
-   int i=0;
    for(i=0; i<str.length(); i++)
    {
         char temp=str[i];
@@ -66,10 +71,6 @@ void wordSearch(char** e)//create an array of words to work with
                 alpha=0;
                 words.insert(words.end(), word);
                 word.clear();
-                /*for(vector<string>::const_iterator k = words.begin(); k != words.end(); ++k)
-                {
-                    cout << *k <<" " ;
-                }*/
             }
             else
             {
@@ -77,15 +78,65 @@ void wordSearch(char** e)//create an array of words to work with
             }
         }                 
     }
-   cout<<"TOTAL WORDS: "<<(int) words.size()<<endl;
-   int jen=0, levi=0;
-
-   for(jen=0; j<words.size(); jen++)
+   
+   cout<<"PART ONE: TOTAL NUMBER OF WORDS: "<<(int) words.size()<<endl<<endl<<endl;
+   for(z=0; z<num; z++)//CREATE TEMP VECTOR
     {
-        for(levi=0; levi<words.size()-1; levi++)
+        tempWords.insert(tempWords.end(), words[z]);
+    }   
+   for(jen=0; jen<num; jen++)//SEARCH FOR DUPLICATES
+    {
+        sub=tempWords[jen];
+        for(levi=0; levi<num; levi++)
         {
-
+            if(tempWords[levi]==sub)
+            {
+                count++;
+                if(jen!=levi)
+                {
+                    tempWords[levi]==" "; 
+                }
+            }
+        }
+        obj.setCount(count);
+        count=0;
+        obj.setName(sub);
+        for(i=0; i<obVec.size(); i++)
+        {
+            if(obVec[i].getName()==sub)
+            {
+                exists=true;
+                break;
+            }
+        }
+        if(exists!=true)
+        {
+            obVec.insert(obVec.end(), obj);
+            cout<<"Name: "<<obj.getName()<<endl;
+            cout<<"Number of occurences: "<<obj.getCount()<<endl<<endl;
         }
     }
-
+    for(i=0; i<lines.size(); i++)
+    {
+        int j=0;
+        for(j=0; j<tempWords.size(); j++)
+        {
+            if(lines[i].find(tempWords[j]))
+            {
+                //foundLines.insert(foundLines.end(), lines[i]);
+                obj.addLine(lines[i]);
+            }
+        }
+    }
+    cout<<"PART TWO: USER INFO: "<<endl<<endl;
+    cout<<"Please enter the search string..."<<endl;
+    cin>>input;
+    cout<<"Your search string was found in the following lines: "<<endl;
+    for(i=0; i<lines[i].size(); i++)
+    {
+        if(lines[i].find(input))
+        {
+            cout<<lines[i]<<endl;
+        }
+    }
 }
