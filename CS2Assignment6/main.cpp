@@ -135,15 +135,32 @@ void wordSearch(char** e)
             }
         }
     }
-    cout<<"PART TWO: USER INFO: "<<endl<<endl;
-    cout<<"Please enter the search string..."<<endl;
-    cin>>input;
-    cout<<"Your search string was found in the following lines: "<<endl;
-    for(i=0; i<lines[i].size(); i++)
+    for(i=0; i<lines.size(); i++)
     {
-        if(lines[i].find(input))
-        {
-            cout<<lines[i]<<endl;
-        }
+        tempWords[i]=lines[i];
+    }
+    cout<<"PART TWO: USER INFO: "<<endl<<endl;
+    int count2=0;
+    while (input!="end")
+    {
+        cout<<"Please enter the search string..."<<endl;
+        cin>>input;
+            transform(input.begin(), input.end(), input.begin(), ::tolower);
+            for(z=0; z<tempWords.size(); z++)
+            {
+                transform(tempWords[z].begin(), tempWords[z].end(), tempWords[z].begin(), ::tolower);
+            }
+        cout<<"Your search string was found in the following lines: "<<endl<<endl;
+        for(i=0; i<lines.size(); i++)
+        {        
+            string templine= lines[i];
+            transform (templine.begin(), templine.end(), templine.begin(), ::tolower);
+            if(templine.find(input)!=string::npos)
+            {
+                count++;
+                cout<<lines[i]<<endl<<endl;
+            }
+        }cout<<"Your search occurs: "<<count<<" time(s)."<<endl<<endl;
+        count=0;
     }
 }
