@@ -35,13 +35,10 @@ void wordSearch(char** e)
 {
     //VARIABLES
    string str=" ";//,line;
-   int len= strlen(*e), i, j, k, alpha, z, jen, levi, count=0;
-   string sub, n, sub2, word, input;
-   int num= words.size();
-   bool exists=false;
-   str+=" ";
+   int len= strlen(*e);
    WordObj arr[200];
    WordObj obj;
+   string input;
 
    //PUT ARGUMENT INTO STRING FORM
    while(*e!=NULL)
@@ -49,6 +46,11 @@ void wordSearch(char** e)
        lines.insert(lines.end(), *(e));
        str+= *(e++);
    }
+   str+=" ";
+   string word;
+   int j=0;
+   int alpha=0;
+   int i=0;
    for(i=0; i<str.length(); i++)
    {
         char temp=str[i];
@@ -78,8 +80,12 @@ void wordSearch(char** e)
             }
         }                 
     }
+   int z;
+   int num= words.size();
+   cout<<"TOTAL NUMBER OF WORDS: "<<(int) words.size()<<endl<<endl<<endl;
    
-   cout<<"PART ONE: TOTAL NUMBER OF WORDS: "<<(int) words.size()<<endl<<endl<<endl;
+   int jen=0, levi=0, iter=0, count=0;
+   string sub, n, sub2;
    for(z=0; z<num; z++)//CREATE TEMP VECTOR
     {
         tempWords.insert(tempWords.end(), words[z]);
@@ -101,6 +107,7 @@ void wordSearch(char** e)
         obj.setCount(count);
         count=0;
         obj.setName(sub);
+        bool exists=false;
         for(i=0; i<obVec.size(); i++)
         {
             if(obVec[i].getName()==sub)
@@ -124,7 +131,7 @@ void wordSearch(char** e)
             if(lines[i].find(tempWords[j]))
             {
                 //foundLines.insert(foundLines.end(), lines[i]);
-                obj.addLine(lines[i]);
+                obj.addLine(input);
             }
         }
     }
